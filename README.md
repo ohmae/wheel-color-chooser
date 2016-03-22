@@ -30,4 +30,4 @@ java -jar WheelColorChooser.jar
 http://www.mm2d.net/
 
 ## License
-[MIT License](https://github.com/ohmae/ImageIO/blob/master/LICENSE.txt)
+[MIT License](https://github.com/ohmae/WheelColorChooser/blob/master/LICENSE)
