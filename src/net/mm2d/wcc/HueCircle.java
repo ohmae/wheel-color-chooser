@@ -161,7 +161,7 @@ public class HueCircle extends JPanel {
 
     /**
      * 色相環の画像を作成する
-     * 
+     *
      * @param v 明度
      */
     private void makeHSCircle(float v) {
@@ -255,7 +255,7 @@ public class HueCircle extends JPanel {
     /**
      * 小数部を取り出す
      *
-     * @param value 実装
+     * @param value 実数
      * @return 小数部
      */
     private float decimal(float value) {
