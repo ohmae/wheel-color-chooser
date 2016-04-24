@@ -12,15 +12,15 @@ package net.mm2d.color;
  *
  * @author <a href="mailto:ryo@mm2d.net">大前良介(OHMAE Ryosuke)</a>
  */
-public final class ColorMethod {
+public final class ColorUtils {
     /**
      * HSV表現をRGB値に変換する
      *
      * @param hsv HSV
      * @return RGB float配列
      */
-    public static float[] HSVtoRGB(float[] hsv) {
-        return HSVtoRGB(hsv[0], hsv[1], hsv[2]);
+    public static float[] convertHsvToRgb(float[] hsv) {
+        return convertHsvToRgb(hsv[0], hsv[1], hsv[2]);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class ColorMethod {
      * @param v Value
      * @return RGB float配列
      */
-    public static float[] HSVtoRGB(float h, float s, float v) {
+    public static float[] convertHsvToRgb(float h, float s, float v) {
         final float[] rgb = new float[3];
         rgb[0] = v;
         rgb[1] = v;
@@ -77,8 +77,8 @@ public final class ColorMethod {
      * @param rgb RGB float配列
      * @return HSV float配列
      */
-    public static float[] RGBtoHSV(float[] rgb) {
-        return RGBtoHSV(rgb[0], rgb[1], rgb[2]);
+    public static float[] convertRgbToHsv(float[] rgb) {
+        return convertRgbToHsv(rgb[0], rgb[1], rgb[2]);
     }
 
     /**
@@ -89,7 +89,7 @@ public final class ColorMethod {
      * @param b B
      * @return HSV float配列
      */
-    public static float[] RGBtoHSV(float r, float g, float b) {
+    public static float[] convertRgbToHsv(float r, float g, float b) {
         final float max = getMax(r, g, b);
         final float min = getMin(r, g, b);
         final float[] hsv = new float[3];

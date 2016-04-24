@@ -7,7 +7,7 @@
 
 package net.mm2d.wcc;
 
-import net.mm2d.color.ColorMethod;
+import net.mm2d.color.ColorUtils;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -176,12 +176,12 @@ public class HueCircle extends JPanel {
                 if (distance < RADIUS + 1) {
                     final double radian = getRadian(cx, cy);
                     final float h = (float) (radian / (Math.PI * 2));
-                    final float s = ColorMethod.clamp(distance / RADIUS, 0.0f, 1.0f);
-                    final float[] rgb = ColorMethod.HSVtoRGB(h, s, v);
-                    color = ColorMethod.toColor(rgb);
+                    final float s = ColorUtils.clamp(distance / RADIUS, 0.0f, 1.0f);
+                    final float[] rgb = ColorUtils.convertHsvToRgb(h, s, v);
+                    color = ColorUtils.toColor(rgb);
                     final float alpha = RADIUS + 1 - distance;
                     if (alpha < 1) { // アンチエイリアス
-                        color = ColorMethod.setAlpha(color, alpha);
+                        color = ColorUtils.setAlpha(color, alpha);
                     }
                 }
                 mImage.setRGB(x, y, color);
@@ -243,8 +243,8 @@ public class HueCircle extends JPanel {
         final int[] colors = new int[mNum];
         for (int i = 0; i < mNum; i++) {
             final float h = decimal(mHue + (float) i / mNum);
-            final float[] rgb = ColorMethod.HSVtoRGB(h, mSaturation, mValue);
-            final int color = ColorMethod.toColor(rgb);
+            final float[] rgb = ColorUtils.convertHsvToRgb(h, mSaturation, mValue);
+            final int color = ColorUtils.toColor(rgb);
             if (mReverse) {
                 colors[(mNum - i) % mNum] = color;
             } else {

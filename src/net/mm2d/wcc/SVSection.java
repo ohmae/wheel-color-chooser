@@ -7,7 +7,7 @@
 
 package net.mm2d.wcc;
 
-import net.mm2d.color.ColorMethod;
+import net.mm2d.color.ColorUtils;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -85,8 +85,8 @@ public class SVSection extends JPanel {
      * @param y Y座標
      */
     private void selectPoint(int x, int y) {
-        final float s = ColorMethod.toFloat(ColorMethod.clamp(x - mMarginLeft, 0, 255));
-        final float v = ColorMethod.toFloat(ColorMethod.clamp(RANGE - (y - mMarginTop), 0, 255));
+        final float s = ColorUtils.toFloat(ColorUtils.clamp(x - mMarginLeft, 0, 255));
+        final float v = ColorUtils.toFloat(ColorUtils.clamp(RANGE - (y - mMarginTop), 0, 255));
         setHSV(mHue, s, v, true);
         repaint();
     }
@@ -131,11 +131,11 @@ public class SVSection extends JPanel {
     private void makeSVSection(BufferedImage image) {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
-                final float[] rgb = ColorMethod.HSVtoRGB(
+                final float[] rgb = ColorUtils.convertHsvToRgb(
                         mHue,
                         (float) x / RANGE,
                         (float) (RANGE - y) / RANGE);
-                final int color = ColorMethod.toColor(rgb);
+                final int color = ColorUtils.toColor(rgb);
                 image.setRGB(x, y, color);
             }
         }

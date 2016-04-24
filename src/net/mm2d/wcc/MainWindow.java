@@ -7,7 +7,7 @@
 
 package net.mm2d.wcc;
 
-import net.mm2d.color.ColorMethod;
+import net.mm2d.color.ColorUtils;
 import net.mm2d.wcc.HueCircle.OnHSChangeListener;
 import net.mm2d.wcc.SVSection.OnSVChangeListener;
 import net.mm2d.wcc.SliderPanel.OnHSVChangeListener;
@@ -165,7 +165,7 @@ public class MainWindow extends JFrame
         final StringBuilder hexSb = new StringBuilder();
         final StringBuilder decSb = new StringBuilder();
         for (final int color : colors) {
-            final int[] rgb = ColorMethod.toRGBInt(color);
+            final int[] rgb = ColorUtils.toRGBInt(color);
             final String hexText = String.format("#%02X%02X%02X%n", rgb[0], rgb[1], rgb[2]);
             hexSb.append(hexText);
             final String decText = String.format("rgb(%d, %d, %d)%n", rgb[0], rgb[1], rgb[2]);

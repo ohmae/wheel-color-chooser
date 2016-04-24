@@ -7,7 +7,7 @@
 
 package net.mm2d.wcc;
 
-import net.mm2d.color.ColorMethod;
+import net.mm2d.color.ColorUtils;
 import net.mm2d.wcc.SliderSpinnerPanel.OnValueChangeListener;
 
 import javax.swing.BoxLayout;
@@ -79,7 +79,7 @@ public class SliderPanel extends JPanel {
         for (int i = 0; i < 3; i++) {
             hsv[i] = mHSV[i].getValue();
         }
-        final float[] rgb = ColorMethod.HSVtoRGB(hsv);
+        final float[] rgb = ColorUtils.convertHsvToRgb(hsv);
         for (int i = 0; i < 3; i++) {
             mRGB[i].setValue(rgb[i]);
         }
@@ -94,7 +94,7 @@ public class SliderPanel extends JPanel {
         for (int i = 0; i < 3; i++) {
             rgb[i] = mRGB[i].getValue();
         }
-        final float[] hsv = ColorMethod.RGBtoHSV(rgb);
+        final float[] hsv = ColorUtils.convertRgbToHsv(rgb);
         for (int i = 0; i < 3; i++) {
             mHSV[i].setValue(hsv[i]);
         }
@@ -113,7 +113,7 @@ public class SliderPanel extends JPanel {
         hsv[0] = h;
         hsv[1] = s;
         hsv[2] = v;
-        final float[] rgb = ColorMethod.HSVtoRGB(hsv);
+        final float[] rgb = ColorUtils.convertHsvToRgb(hsv);
         for (int i = 0; i < 3; i++) {
             mHSV[i].setValue(hsv[i]);
             mRGB[i].setValue(rgb[i]);
