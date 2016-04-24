@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.wcc;
+package net.mm2d.color;
 
 /**
  * HSVやRGBの色空間表現を扱う上でのメソッド

@@ -7,6 +7,7 @@
 
 package net.mm2d.wcc;
 
+import net.mm2d.color.ColorMethod;
 import net.mm2d.wcc.SliderSpinnerPanel.OnValueChangeListener;
 
 import javax.swing.BoxLayout;

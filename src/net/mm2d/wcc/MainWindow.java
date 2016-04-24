@@ -7,6 +7,7 @@
 
 package net.mm2d.wcc;
 
+import net.mm2d.color.ColorMethod;
 import net.mm2d.wcc.HueCircle.OnHSChangeListener;
 import net.mm2d.wcc.SVSection.OnSVChangeListener;
 import net.mm2d.wcc.SliderPanel.OnHSVChangeListener;

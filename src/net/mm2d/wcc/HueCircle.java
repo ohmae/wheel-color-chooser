@@ -7,6 +7,8 @@
 
 package net.mm2d.wcc;
 
+import net.mm2d.color.ColorMethod;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
