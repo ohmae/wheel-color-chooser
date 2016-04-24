@@ -59,7 +59,6 @@ public class SliderSpinnerPanel extends JPanel implements ChangeListener {
         mSpinner = new JSpinner(mModel);
         final DefaultEditor editor = (DefaultEditor) mSpinner.getEditor();
         editor.getTextField().setColumns(3);
-        editor.getTextField().setFocusable(false); // 選択不可
         mSlider.setMinimum(min);
         mSlider.setMaximum(max);
         mModel.setMinimum(min);

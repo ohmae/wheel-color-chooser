@@ -39,12 +39,12 @@ public class HueCircle extends JPanel {
     private float mValue;
     private int mNum;
     private boolean mReverse = false;
-    private OnHSChangeListener mListener;
+    private OnHsChangeListener mListener;
 
     /**
      * 値変化のリスナー
      */
-    public interface OnHSChangeListener {
+    public interface OnHsChangeListener {
         /**
          * 値が変化したときコール
          *
@@ -52,7 +52,7 @@ public class HueCircle extends JPanel {
          * @param saturation 彩度
          * @param value 輝度
          */
-        public void onHSChange(float hue, float saturation, float value);
+        public void onHsChange(float hue, float saturation, float value);
     }
 
     /**
@@ -105,7 +105,7 @@ public class HueCircle extends JPanel {
         } else {
             s = 1.0f;
         }
-        setHSV(h, s, mValue, true);
+        setHsv(h, s, mValue, true);
     }
 
     /**
@@ -117,8 +117,8 @@ public class HueCircle extends JPanel {
      * @param s Saturation
      * @param v Value
      */
-    public void setHSV(float h, float s, float v) {
-        setHSV(h, s, v, false);
+    public void setHsv(float h, float s, float v) {
+        setHsv(h, s, v, false);
     }
 
     /**
@@ -129,7 +129,7 @@ public class HueCircle extends JPanel {
      * @param v Value
      * @param notify リスナー通知の有無
      */
-    private void setHSV(float h, float s, float v, boolean notify) {
+    private void setHsv(float h, float s, float v, boolean notify) {
         mHue = h;
         mSaturation = s;
         if (mValue != v) {
@@ -137,7 +137,7 @@ public class HueCircle extends JPanel {
             makeHSCircle(mValue);
         }
         if (notify) {
-            performHSChange();
+            performHsChange();
         }
         repaint();
     }
@@ -221,16 +221,16 @@ public class HueCircle extends JPanel {
      *
      * @param listener リスナー
      */
-    public void setOnHSChangeListener(OnHSChangeListener listener) {
+    public void setOnHsChangeListener(OnHsChangeListener listener) {
         mListener = listener;
     }
 
     /**
      * 値の変化をリスナーに通知する
      */
-    private void performHSChange() {
+    private void performHsChange() {
         if (mListener != null) {
-            mListener.onHSChange(mHue, mSaturation, mValue);
+            mListener.onHsChange(mHue, mSaturation, mValue);
         }
     }
 

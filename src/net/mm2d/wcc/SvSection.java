@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  *
  * @author <a href="mailto:ryo@mm2d.net">大前良介(OHMAE Ryosuke)</a>
  */
-public class SVSection extends JPanel {
+public class SvSection extends JPanel {
     private static final int RANGE = 255;
     private static final int WIDTH = 260;
     private static final int HEIGHT = 260;
@@ -34,12 +34,12 @@ public class SVSection extends JPanel {
     private float mHue;
     private float mSaturation;
     private float mValue;
-    private OnSVChangeListener mListener;
+    private OnSvChangeListener mListener;
 
     /**
      * 値変化のリスナー
      */
-    public interface OnSVChangeListener {
+    public interface OnSvChangeListener {
         /**
          * 値が変化したときコール
          *
@@ -47,13 +47,13 @@ public class SVSection extends JPanel {
          * @param saturation 彩度
          * @param value 輝度
          */
-        public void onSVChange(float hue, float saturation, float value);
+        public void onSvChange(float hue, float saturation, float value);
     }
 
     /**
      * インスタンス作成
      */
-    public SVSection() {
+    public SvSection() {
         super();
         mHue = 0.0f;
         mSaturation = 1.0f;
@@ -61,7 +61,7 @@ public class SVSection extends JPanel {
         mImage = new BufferedImage(RANGE, RANGE, BufferedImage.TYPE_4BYTE_ABGR);
         mMarginTop = (WIDTH - RANGE) / 2;
         mMarginLeft = (HEIGHT - RANGE) / 2;
-        makeSVSection(mImage);
+        makeSvSection(mImage);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         final MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -87,7 +87,7 @@ public class SVSection extends JPanel {
     private void selectPoint(int x, int y) {
         final float s = ColorUtils.toFloat(ColorUtils.clamp(x - mMarginLeft, 0, 255));
         final float v = ColorUtils.toFloat(ColorUtils.clamp(RANGE - (y - mMarginTop), 0, 255));
-        setHSV(mHue, s, v, true);
+        setHsv(mHue, s, v, true);
         repaint();
     }
 
@@ -98,8 +98,8 @@ public class SVSection extends JPanel {
      * @param s S
      * @param v V
      */
-    public void setHSV(float h, float s, float v) {
-        setHSV(h, s, v, false);
+    public void setHsv(float h, float s, float v) {
+        setHsv(h, s, v, false);
     }
 
     /**
@@ -110,15 +110,15 @@ public class SVSection extends JPanel {
      * @param v V
      * @param notify リスナー通知の有無
      */
-    private void setHSV(float h, float s, float v, boolean notify) {
+    private void setHsv(float h, float s, float v, boolean notify) {
         if (mHue != h) {
             mHue = h;
-            makeSVSection(mImage);
+            makeSvSection(mImage);
         }
         mSaturation = s;
         mValue = v;
         if (notify) {
-            performSVChange();
+            performSvChange();
         }
         repaint();
     }
@@ -128,7 +128,7 @@ public class SVSection extends JPanel {
      *
      * @param image 書き込み先
      */
-    private void makeSVSection(BufferedImage image) {
+    private void makeSvSection(BufferedImage image) {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 final float[] rgb = ColorUtils.convertHsvToRgb(
@@ -146,16 +146,16 @@ public class SVSection extends JPanel {
      *
      * @param listener リスナー
      */
-    public void setOnSVChangeListener(OnSVChangeListener listener) {
+    public void setOnSvChangeListener(OnSvChangeListener listener) {
         mListener = listener;
     }
 
     /**
      * 値の変化をリスナーに通知する
      */
-    private void performSVChange() {
+    private void performSvChange() {
         if (mListener != null) {
-            mListener.onSVChange(mHue, mSaturation, mValue);
+            mListener.onSvChange(mHue, mSaturation, mValue);
         }
     }
 
