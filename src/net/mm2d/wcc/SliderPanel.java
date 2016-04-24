@@ -118,7 +118,7 @@ public class SliderPanel extends JPanel {
      * @param h H
      * @param s S
      * @param v V
-     * @param notify 通知するかいなか
+     * @param notify リスナー通知する場合true
      */
     public void setHsv(float h, float s, float v, boolean notify) {
         final float[] hsv = new float[3];
@@ -152,6 +152,7 @@ public class SliderPanel extends JPanel {
      * @param r R
      * @param g G
      * @param b B
+     * @param notify リスナー通知する場合true
      */
     public void setRgb(float r, float g, float b, boolean notify) {
         final float[] rgb = new float[3];
@@ -183,7 +184,7 @@ public class SliderPanel extends JPanel {
 
     /**
      * 現在のRGBの値を返す
-     * 
+     *
      * @return RGB
      */
     public float[] getRgb() {

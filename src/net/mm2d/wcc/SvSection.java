@@ -108,7 +108,7 @@ public class SvSection extends JPanel {
      * @param h H
      * @param s S
      * @param v V
-     * @param notify リスナー通知の有無
+     * @param notify リスナー通知する場合true
      */
     private void setHsv(float h, float s, float v, boolean notify) {
         if (mHue != h) {
