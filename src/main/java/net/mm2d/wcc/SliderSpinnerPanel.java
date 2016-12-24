@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -24,8 +24,6 @@ import javax.swing.event.ChangeListener;
  * @author <a href="mailto:ryo@mm2d.net">大前良介(OHMAE Ryosuke)</a>
  */
 public class SliderSpinnerPanel extends JPanel implements ChangeListener {
-    private final SpinnerNumberModel mModel;
-    private final JLabel mLabel;
     private final JSlider mSlider;
     private final JSpinner mSpinner;
     private boolean mNotify = true;
@@ -39,7 +37,7 @@ public class SliderSpinnerPanel extends JPanel implements ChangeListener {
         /**
          * 値変化時にコール
          */
-        public void onValueChanged();
+        void onValueChanged();
     }
 
     /**
@@ -47,24 +45,24 @@ public class SliderSpinnerPanel extends JPanel implements ChangeListener {
      *
      * @param label ラベル
      * @param value 初期値
-     * @param min 最小値
-     * @param max 最大値
+     * @param min   最小値
+     * @param max   最大値
      */
     public SliderSpinnerPanel(String label, int value, int min, int max) {
         super();
         setLayout(new FlowLayout());
-        mModel = new SpinnerNumberModel();
-        mLabel = new JLabel(label);
+        SpinnerNumberModel model = new SpinnerNumberModel();
+        JLabel jLabel = new JLabel(label);
         mSlider = new JSlider();
-        mSpinner = new JSpinner(mModel);
+        mSpinner = new JSpinner(model);
         final DefaultEditor editor = (DefaultEditor) mSpinner.getEditor();
         editor.getTextField().setColumns(3);
         mSlider.setMinimum(min);
         mSlider.setMaximum(max);
-        mModel.setMinimum(min);
-        mModel.setMaximum(max);
+        model.setMinimum(min);
+        model.setMaximum(max);
         setValue(value);
-        add(mLabel);
+        add(jLabel);
         add(mSlider);
         add(mSpinner);
         mSlider.addChangeListener(this);

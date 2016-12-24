@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -60,7 +61,7 @@ public class MainWindow extends JFrame
         super();
         setTitle("色相環型ColorChooser");
         setSize(1064, 575);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(Color.WHITE);
 
         final JPanel contentPane = new JPanel();
@@ -158,13 +159,7 @@ public class MainWindow extends JFrame
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (final ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (final InstantiationException e) {
-            e.printStackTrace();
-        } catch (final IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (final UnsupportedLookAndFeelException e) {
+        } catch (final ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
         new MainWindow();
@@ -181,7 +176,6 @@ public class MainWindow extends JFrame
             if (color == mCurrentColor) {
                 return;
             }
-            System.out.println("set:" + color + " " + mCurrentColor);
             final float[] rgb = ColorUtils.toRGB(color);
             mSliderPanel.setRgb(rgb[0], rgb[1], rgb[2], true);
         }
@@ -199,8 +193,8 @@ public class MainWindow extends JFrame
     /**
      * 16進数テキストをRGB値に変更
      *
-     * @param hexText
-     * @return
+     * @param hexText 16進数表現の色
+     * @return RGB値
      */
     private int convertHexToRgb(String hexText) {
         if (hexText.length() != 6) {
@@ -228,7 +222,6 @@ public class MainWindow extends JFrame
     private void setColors() {
         final int[] colors = mHueCircle.getColors();
         mCurrentColor = colors[0];
-        System.out.println("current:" + mCurrentColor);
         setRgbInput(mCurrentColor);
         // サンプル一覧を更新
         mSamplePanel.setColors(colors);

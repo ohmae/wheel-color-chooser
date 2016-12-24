@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -48,11 +48,11 @@ public class HueCircle extends JPanel {
         /**
          * 値が変化したときコール
          *
-         * @param hue 色相
+         * @param hue        色相
          * @param saturation 彩度
-         * @param value 輝度
+         * @param value      輝度
          */
-        public void onHsChange(float hue, float saturation, float value);
+        void onHsChange(float hue, float saturation, float value);
     }
 
     /**
@@ -124,9 +124,9 @@ public class HueCircle extends JPanel {
     /**
      * HSVの値を設定する
      *
-     * @param h Hue
-     * @param s Saturation
-     * @param v Value
+     * @param h      Hue
+     * @param s      Saturation
+     * @param v      Value
      * @param notify リスナー通知の有無
      */
     private void setHsv(float h, float s, float v, boolean notify) {
@@ -197,7 +197,7 @@ public class HueCircle extends JPanel {
      * @return 座標とX軸の角度[radian]
      */
     private static double getRadian(double x, double y) {
-        double radian = 0;
+        double radian;
         if (x == 0) {
             // ゼロ除算回避
             if (y > 0) {

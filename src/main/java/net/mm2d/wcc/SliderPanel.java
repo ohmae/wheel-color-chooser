@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -8,7 +8,6 @@
 package net.mm2d.wcc;
 
 import net.mm2d.color.ColorUtils;
-import net.mm2d.wcc.SliderSpinnerPanel.OnValueChangeListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -30,11 +29,11 @@ public class SliderPanel extends JPanel {
         /**
          * 値が変化したときコール
          *
-         * @param hue 色相
+         * @param hue        色相
          * @param saturation 彩度
-         * @param value 輝度
+         * @param value      輝度
          */
-        public void onHsvChange(float hue, float saturation, float value);
+        void onHsvChange(float hue, float saturation, float value);
     }
 
     /**
@@ -49,25 +48,13 @@ public class SliderPanel extends JPanel {
         mRgb[0] = new SliderSpinnerPanel("R", 255, 0, 255);
         mRgb[1] = new SliderSpinnerPanel("G", 0, 0, 255);
         mRgb[2] = new SliderSpinnerPanel("B", 0, 0, 255);
-        final OnValueChangeListener hsvListener = new OnValueChangeListener() {
-            @Override
-            public void onValueChanged() {
-                onHsvChanged();
-            }
-        };
-        final OnValueChangeListener rgbListener = new OnValueChangeListener() {
-            @Override
-            public void onValueChanged() {
-                onRgbChanged();
-            }
-        };
         for (final SliderSpinnerPanel p : mHsv) {
             add(p);
-            p.setOnColorChangeListener(hsvListener);
+            p.setOnColorChangeListener(this::onHsvChanged);
         }
         for (final SliderSpinnerPanel p : mRgb) {
             add(p);
-            p.setOnColorChangeListener(rgbListener);
+            p.setOnColorChangeListener(this::onRgbChanged);
         }
     }
 
@@ -115,9 +102,9 @@ public class SliderPanel extends JPanel {
     /**
      * 外部からHSVを指定して状態変更
      *
-     * @param h H
-     * @param s S
-     * @param v V
+     * @param h      H
+     * @param s      S
+     * @param v      V
      * @param notify リスナー通知する場合true
      */
     public void setHsv(float h, float s, float v, boolean notify) {
@@ -149,9 +136,9 @@ public class SliderPanel extends JPanel {
     /**
      * 外部からHSVを指定して状態変更
      *
-     * @param r R
-     * @param g G
-     * @param b B
+     * @param r      R
+     * @param g      G
+     * @param b      B
      * @param notify リスナー通知する場合true
      */
     public void setRgb(float r, float g, float b, boolean notify) {
