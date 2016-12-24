@@ -142,7 +142,7 @@ public class SliderSpinnerPanel extends JPanel implements ChangeListener {
         int value;
         if (mSpinner == e.getSource()) {
             // スピナーの操作をスライダーに伝える
-            value = (int) mSpinner.getValue();
+            value = (Integer) mSpinner.getValue();
             mNotify = false;
             mSlider.setValue(value);
             mNotify = true;

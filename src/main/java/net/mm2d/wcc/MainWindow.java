@@ -275,7 +275,7 @@ public class MainWindow extends JFrame
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() == mDivisionSpinner) {
             // 分割数用Spinnerの変化
-            final int div = (int) mDivisionSpinner.getValue();
+            final int div = (Integer) mDivisionSpinner.getValue();
             mHueCircle.setDivision(div);
             setColors();
         } else if (e.getSource() == mReverseCheck) {
