@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -36,7 +36,7 @@ public class ColorSamplePanel extends JPanel {
         mSize = new Dimension(30, 17); // 一つの大きさ
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         mNum = 12;
-        mPanelList = new ArrayList<JPanel>(mNum);
+        mPanelList = new ArrayList<>(mNum);
         for (int i = 0; i < mNum; i++) {
             final JPanel panel = new JPanel();
             panel.setPreferredSize(mSize);

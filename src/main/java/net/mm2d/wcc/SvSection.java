@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -43,11 +43,11 @@ public class SvSection extends JPanel {
         /**
          * 値が変化したときコール
          *
-         * @param hue 色相
+         * @param hue        色相
          * @param saturation 彩度
-         * @param value 輝度
+         * @param value      輝度
          */
-        public void onSvChange(float hue, float saturation, float value);
+        void onSvChange(float hue, float saturation, float value);
     }
 
     /**
@@ -105,9 +105,9 @@ public class SvSection extends JPanel {
     /**
      * HSVの値を設定する
      *
-     * @param h H
-     * @param s S
-     * @param v V
+     * @param h      H
+     * @param s      S
+     * @param v      V
      * @param notify リスナー通知する場合true
      */
     private void setHsv(float h, float s, float v, boolean notify) {

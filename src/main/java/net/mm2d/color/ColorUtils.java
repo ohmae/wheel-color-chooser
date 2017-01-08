@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
@@ -131,9 +131,9 @@ public final class ColorUtils {
     /**
      * rgbおよびrgbの最大値最小値から色相を計算する
      *
-     * @param r 赤
-     * @param g 緑
-     * @param b 青
+     * @param r   赤
+     * @param g   緑
+     * @param b   青
      * @param max 最大
      * @param min 最小
      * @return 色相
@@ -197,7 +197,8 @@ public final class ColorUtils {
      * @return RGB int配列
      */
     public static int toColor(int r, int g, int b) {
-        return (0xff << 24) | ((0xff & r) << 16) | ((0xff & g) << 8) | (0xff & b);
+        //noinspection NumericOverflow
+        return 0xff << 24 | (0xff & r) << 16 | (0xff & g) << 8 | 0xff & b;
     }
 
     /**
@@ -336,33 +337,23 @@ public final class ColorUtils {
      * min以下はmin、max以上はmaxに飽和させる
      *
      * @param value 値
-     * @param min 最小値
-     * @param max 最大値
+     * @param min   最小値
+     * @param max   最大値
      * @return 飽和させた値
      */
     public static int clamp(int value, int min, int max) {
-        if (value < min) {
-            return min;
-        } else if (value > max) {
-            return max;
-        }
-        return value;
+        return Math.min(Math.max(value, min), max);
     }
 
     /**
      * min以下はmin、max以上はmaxに飽和させる
      *
      * @param value 値
-     * @param min 最小値
-     * @param max 最大値
+     * @param min   最小値
+     * @param max   最大値
      * @return 飽和させた値
      */
     public static float clamp(float value, float min, float max) {
-        if (value < min) {
-            return min;
-        } else if (value > max) {
-            return max;
-        }
-        return value;
+        return Math.min(Math.max(value, min), max);
     }
 }
