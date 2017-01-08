@@ -342,12 +342,7 @@ public final class ColorUtils {
      * @return 飽和させた値
      */
     public static int clamp(int value, int min, int max) {
-        if (value < min) {
-            return min;
-        } else if (value > max) {
-            return max;
-        }
-        return value;
+        return Math.min(Math.max(value, min), max);
     }
 
     /**
@@ -359,11 +354,6 @@ public final class ColorUtils {
      * @return 飽和させた値
      */
     public static float clamp(float value, float min, float max) {
-        if (value < min) {
-            return min;
-        } else if (value > max) {
-            return max;
-        }
-        return value;
+        return Math.min(Math.max(value, min), max);
     }
 }
