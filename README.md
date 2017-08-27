@@ -1,5 +1,6 @@
 # 色相環型ColorChooser
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE)
+[![license](https://img.shields.io/github/license/ohmae/WheelColorChooser.svg)](./LICENSE)
+[![GitHub release](https://img.shields.io/github/release/ohmae/WheelColorChooser.svg)](https://github.com/ohmae/WheelColorChooser/releases)
 
 同一彩度・明度で色相を均等に分割した色相環の色を一括して選択できるColorChooserです。
 
