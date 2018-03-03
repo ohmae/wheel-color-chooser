@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2014 大前良介(OHMAE Ryosuke)
+ * Copyright (c) 2014 大前良介 (OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 /**
  * カラーサンプルを表示する
  *
- * @author <a href="mailto:ryo@mm2d.net">大前良介(OHMAE Ryosuke)</a>
+ * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
 public class ColorSamplePanel extends JPanel {
     private final List<JPanel> mPanelList;
