@@ -58,7 +58,7 @@ public class SvSection extends JPanel {
         mHue = 0.0f;
         mSaturation = 1.0f;
         mValue = 1.0f;
-        mImage = new BufferedImage(RANGE, RANGE, BufferedImage.TYPE_4BYTE_ABGR);
+        mImage = new BufferedImage(RANGE + 1, RANGE + 1, BufferedImage.TYPE_4BYTE_ABGR);
         mMarginTop = (WIDTH - RANGE) / 2;
         mMarginLeft = (HEIGHT - RANGE) / 2;
         makeSvSection(mImage);
@@ -129,8 +129,8 @@ public class SvSection extends JPanel {
      * @param image 書き込み先
      */
     private void makeSvSection(BufferedImage image) {
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
+        for (int y = 0; y <= RANGE; y++) {
+            for (int x = 0; x <= RANGE; x++) {
                 final float[] rgb = ColorUtils.convertHsvToRgb(
                         mHue,
                         (float) x / RANGE,
