@@ -37,18 +37,16 @@ class SvSection : JPanel() {
     init {
         makeSvSection(image)
         preferredSize = Dimension(WIDTH, HEIGHT)
-        object : MouseAdapter() {
+        addMouseListener(object : MouseAdapter() {
             override fun mousePressed(e: MouseEvent) {
                 selectPoint(e.x, e.y)
             }
-
+        })
+        addMouseMotionListener(object : MouseAdapter() {
             override fun mouseDragged(e: MouseEvent) {
                 selectPoint(e.x, e.y)
             }
-        }.let {
-            addMouseListener(it)
-            addMouseMotionListener(it)
-        }
+        })
     }
 
     /**

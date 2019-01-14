@@ -85,7 +85,7 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
         val cx = x - centerX
         val cy = centerY - y
         val distance = Math.sqrt((cx * cx + cy * cy).toDouble()).toFloat()
-        val h = (getRadian(cx.toDouble(), cy.toDouble()) / (Math.PI * 2)).toFloat()
+        val h = (calculateRadian(cx.toDouble(), cy.toDouble()) / (Math.PI * 2)).toFloat()
         val s: Float = if (distance < RADIUS) {
             distance / RADIUS
         } else {
@@ -160,7 +160,7 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
                 val distance = Math.sqrt((cx * cx + cy * cy).toDouble()).toFloat()
                 var color = 0
                 if (distance < RADIUS + 1) {
-                    val radian = getRadian(cx.toDouble(), cy.toDouble())
+                    val radian = calculateRadian(cx.toDouble(), cy.toDouble())
                     val h = (radian / (Math.PI * 2)).toFloat()
                     val s = ColorUtils.clamp(distance / RADIUS, 0.0f, 1.0f)
                     val rgb = ColorUtils.convertHsvToRgb(h, s, v)
@@ -183,6 +183,29 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
      */
     private fun decimal(value: Float): Float {
         return value - value.toInt()
+    }
+
+    /**
+     * 指定された座標とX軸がなす角度を計算して返す
+     *
+     * @param x X座標
+     * @param y Y座標
+     * @return 座標とX軸の角度 radian
+     */
+    private fun calculateRadian(x: Double, y: Double): Double {
+        if (x == 0.0) {
+            // ゼロ除算回避
+            return if (y > 0) {
+                Math.PI / 2
+            } else {
+                Math.PI * 3 / 2
+            }
+        }
+        return Math.atan(y / x) + when {
+            x < 0 -> Math.PI
+            y < 0 -> Math.PI * 2
+            else -> 0.0
+        }
     }
 
     override fun paint(g: Graphics?) {
@@ -211,28 +234,5 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
         private const val DIAMETER = RADIUS * 2 + 1
         private const val WIDTH = 520
         private const val HEIGHT = 520
-
-        /**
-         * 指定された座標とX軸がなす角度を計算して返す
-         *
-         * @param x X座標
-         * @param y Y座標
-         * @return 座標とX軸の角度 radian
-         */
-        private fun getRadian(x: Double, y: Double): Double {
-            if (x == 0.0) {
-                // ゼロ除算回避
-                return if (y > 0) {
-                    Math.PI / 2
-                } else {
-                    Math.PI * 3 / 2
-                }
-            }
-            return Math.atan(y / x) + when {
-                x < 0 -> Math.PI
-                y < 0 -> Math.PI * 2
-                else -> 0.0
-            }
-        }
     }
 }
