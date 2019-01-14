@@ -8,6 +8,8 @@
 package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
+import net.mm2d.color.clamp
+import net.mm2d.color.setAlpha
 
 import java.awt.Color
 import java.awt.Dimension
@@ -47,8 +49,7 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
             val colors = IntArray(sampleCount)
             for (i in 0 until sampleCount) {
                 val h = decimal(hue + i.toFloat() / sampleCount)
-                val rgb = ColorUtils.convertHsvToRgb(h, saturation, value)
-                val color = ColorUtils.toColor(rgb)
+                val color = ColorUtils.hsvToColor(h, saturation, value)
                 if (reverse) {
                     colors[(sampleCount - i) % sampleCount] = color
                 } else {
@@ -162,12 +163,11 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
                 if (distance < RADIUS + 1) {
                     val radian = calculateRadian(cx.toDouble(), cy.toDouble())
                     val h = (radian / (Math.PI * 2)).toFloat()
-                    val s = ColorUtils.clamp(distance / RADIUS, 0.0f, 1.0f)
-                    val rgb = ColorUtils.convertHsvToRgb(h, s, v)
-                    color = ColorUtils.toColor(rgb)
+                    val s = (distance / RADIUS).clamp(0.0f, 1.0f)
+                    color = ColorUtils.hsvToColor(h, s, v)
                     val alpha = RADIUS + 1 - distance
                     if (alpha < 1) { // アンチエイリアス
-                        color = ColorUtils.setAlpha(color, alpha)
+                        color = color.setAlpha(alpha)
                     }
                 }
                 image.setRGB(x, y, color)

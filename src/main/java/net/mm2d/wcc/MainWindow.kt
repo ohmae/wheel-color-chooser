@@ -8,6 +8,7 @@
 package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
+import net.mm2d.color.setAlpha
 import java.awt.*
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
@@ -134,7 +135,7 @@ class MainWindow : JFrame() {
         if (color < 0) {
             rgbInput.background = Color.PINK
         } else {
-            color = ColorUtils.setAlpha(color, 255)
+            color = color.setAlpha(255)
             rgbInput.background = Color.WHITE
             if (color == currentColor) {
                 return

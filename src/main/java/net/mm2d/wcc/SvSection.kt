@@ -8,6 +8,8 @@
 package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
+import net.mm2d.color.clamp
+import net.mm2d.color.toRatio
 
 import java.awt.Color
 import java.awt.Dimension
@@ -36,7 +38,13 @@ class SvSection : JPanel() {
      * インスタンス作成
      */
     init {
-        makeSvSection(image)
+        for (y in 0..RANGE) {
+            for (x in 0..RANGE) {
+                val s = x.toFloat() / RANGE
+                val v = (RANGE - y).toFloat() / RANGE
+                image.setRGB(x, y, ColorUtils.svToMask(s, v))
+            }
+        }
         preferredSize = Dimension(WIDTH, HEIGHT)
         addMouseListener(object : MouseAdapter() {
             override fun mousePressed(e: MouseEvent) {
@@ -57,8 +65,8 @@ class SvSection : JPanel() {
      * @param y Y座標
      */
     private fun selectPoint(x: Int, y: Int) {
-        val s = ColorUtils.toFloat(ColorUtils.clamp(x - marginLeft, 0, 255))
-        val v = ColorUtils.toFloat(ColorUtils.clamp(RANGE - (y - marginTop), 0, 255))
+        val s = (x - marginLeft).clamp(0, 255).toRatio()
+        val v = (RANGE - (y - marginTop)).clamp(0, 255).toRatio()
         setHsv(hue, s, v, true)
     }
 
@@ -84,7 +92,7 @@ class SvSection : JPanel() {
     private fun setHsv(h: Float, s: Float, v: Float, notify: Boolean) {
         if (hue != h) {
             hue = h
-            maxColor = Color(ColorUtils.toColor(ColorUtils.convertHsvToRgb(hue, 1f, 1f)))
+            maxColor = Color(ColorUtils.hsvToColor(hue, 1f, 1f))
         }
         saturation = s
         value = v
@@ -94,22 +102,6 @@ class SvSection : JPanel() {
         repaint()
     }
 
-    /**
-     * SV断面の画像を作成する
-     *
-     * @param image 書き込み先
-     */
-    private fun makeSvSection(image: BufferedImage) {
-        Thread {
-            for (y in 0..RANGE) {
-                for (x in 0..RANGE) {
-                    val color = ColorUtils.svToMask(x.toFloat() / RANGE, (RANGE - y).toFloat() / RANGE)
-                    image.setRGB(x, y, color)
-                }
-            }
-            repaint()
-        }.start()
-    }
 
     override fun paint(g: Graphics?) {
         val g2 = g as? Graphics2D ?: return

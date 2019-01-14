@@ -7,32 +7,34 @@
 
 package net.mm2d.color
 
+import kotlin.math.roundToInt
+
 /**
  * HSVやRGBの色空間表現を扱う上でのメソッド
  */
 object ColorUtils {
     /**
-     * HSV表現をRGB値に変換する
-     *
-     * @param hsv HSV
-     * @return RGB float配列
-     */
-    fun convertHsvToRgb(hsv: FloatArray): FloatArray {
-        return convertHsvToRgb(hsv[0], hsv[1], hsv[2])
-    }
-
-    /**
-     * HSV表現をRGB値に変換する
+     * Convert given HSV [0.0f, 1.0f] to RGB FloatArray
      *
      * @param h Hue
      * @param s Saturation
      * @param v Value
-     * @return RGB float配列
+     * @return RGB FloatArray
      */
-    fun convertHsvToRgb(h: Float, s: Float, v: Float): FloatArray {
-        if (s <= 0.0f) {
-            return floatArrayOf(v, v, v)
-        }
+    fun hsvToRgb(h: Float, s: Float, v: Float): FloatArray {
+        return toRGB(hsvToColor(h, s, v))
+    }
+
+    /**
+     * Convert given HSV [0.0f, 1.0f] to color
+     *
+     * @param h Hue
+     * @param s Saturation
+     * @param v Value
+     * @return color
+     */
+    fun hsvToColor(h: Float, s: Float, v: Float): Int {
+        if (s <= 0.0f) return toColor(v, v, v)
         val hue = h * 6.0f // 計算しやすいように[0.0f, 6.0f]で扱う
         val i = hue.toInt() // hueの整数部
         val f = hue - i // hueの小数部
@@ -69,12 +71,12 @@ object ColorUtils {
                 b *= 1 - s
             }
         }
-        return floatArrayOf(r, g, b)
+        return toColor(r, g, b)
     }
 
     fun svToMask(s: Float, v: Float): Int {
         val a = 1f - (s * v)
-        val g = if (a == 0f) 0f else clamp((v * (1f - s) / a), 0f, 1f)
+        val g = if (a == 0f) 0f else (v * (1f - s) / a).clamp(0f, 1f)
         return toColor(a, g, g, g)
     }
 
@@ -84,8 +86,8 @@ object ColorUtils {
      * @param rgb RGB float配列
      * @return HSV float配列
      */
-    fun convertRgbToHsv(rgb: FloatArray): FloatArray {
-        return convertRgbToHsv(rgb[0], rgb[1], rgb[2])
+    fun rgbToHsv(rgb: FloatArray): FloatArray {
+        return rgbToHsv(rgb[0], rgb[1], rgb[2])
     }
 
     /**
@@ -96,7 +98,7 @@ object ColorUtils {
      * @param b B
      * @return HSV float配列
      */
-    fun convertRgbToHsv(r: Float, g: Float, b: Float): FloatArray {
+    fun rgbToHsv(r: Float, g: Float, b: Float): FloatArray {
         val max = max(r, g, b)
         val min = min(r, g, b)
         val hsv = FloatArray(3)
@@ -143,49 +145,23 @@ object ColorUtils {
                 hue = 4.0f + (r - g) / hue
             }
         }
-        hue = clamp(hue / 6.0f, 0.0f, 1.0f)
+        hue = (hue / 6.0f).clamp(0.0f, 1.0f)
         return hue
     }
 
-    /**
-     * float配列のRGB値からint表現に変換する
-     *
-     * @param rgb RGB配列
-     * @return RGB int配列
-     */
-    fun toColor(rgb: FloatArray): Int {
-        return toColor(rgb[0], rgb[1], rgb[2])
+    private fun toColor(r: Float, g: Float, b: Float): Int {
+        return toColor(r.to8bit(), g.to8bit(), b.to8bit())
     }
 
-    /**
-     * float値で表現されたRGB値からint表現に変換する
-     *
-     * @param r 赤
-     * @param g 緑
-     * @param b 青
-     * @return RGB int配列
-     */
-    fun toColor(r: Float, g: Float, b: Float): Int {
-        return toColor(to8bit(r), to8bit(g), to8bit(b))
+    private fun toColor(a: Float, r: Float, g: Float, b: Float): Int {
+        return toColor(a.to8bit(), r.to8bit(), g.to8bit(), b.to8bit())
     }
 
-    fun toColor(a: Float, r: Float, g: Float, b: Float): Int {
-        return toColor(to8bit(a), to8bit(r), to8bit(g), to8bit(b))
-    }
-
-    /**
-     * RGBそれぞれの値を一つのint値表現に変換する
-     *
-     * @param r 赤
-     * @param g 緑
-     * @param b 青
-     * @return RGB int配列
-     */
-    fun toColor(r: Int, g: Int, b: Int): Int {
+    private fun toColor(r: Int, g: Int, b: Int): Int {
         return 0xff shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
     }
 
-    fun toColor(a: Int, r: Int, g: Int, b: Int): Int {
+    private fun toColor(a: Int, r: Int, g: Int, b: Int): Int {
         return 0xff and a shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
     }
 
@@ -213,75 +189,43 @@ object ColorUtils {
      */
     fun toRGB(color: Int): FloatArray {
         return floatArrayOf(
-                toFloat(color.ushr(16)),
-                toFloat(color.ushr(8)),
-                toFloat(color)
+                color.ushr(16).toRatio(),
+                color.ushr(8).toRatio(),
+                color.toRatio()
         )
     }
-
-    /**
-     * 色にアルファ値を加える。
-     *
-     * @param color 色
-     * @param alpha アルファ値[0.0, 1.0]
-     * @return ARGB int値
-     */
-    fun setAlpha(color: Int, alpha: Float): Int {
-        return setAlpha(color, (0xff * clamp(alpha, 0.0f, 1.0f)).toInt())
-    }
-
-    /**
-     * 色にアルファ値を加える。
-     *
-     * @param color 色
-     * @param alpha アルファ値[0, 255]
-     * @return ARGB int値
-     */
-    fun setAlpha(color: Int, alpha: Int): Int {
-        return color and 0xffffff or (alpha shl 24)
-    }
-
-    /**
-     * 8bit値を[0.0, 1.0]のfloat表現に変換する
-     *
-     * @param value 8bit値[0, 0xff]
-     * @return float値[0.0, 1.0]
-     */
-    fun toFloat(value: Int): Float {
-        return clamp((value and 0xff) / 255.0f, 0.0f, 1.0f)
-    }
-
-    /**
-     * [0.0f, 1.0f]で表現された値を8ビット表現に変換する
-     *
-     * @param value float値[0.0, 1.0]
-     * @return int値
-     */
-    private fun to8bit(value: Float): Int {
-        return clamp((value * 255 + 0.5f).toInt(), 0, 255)
-    }
-
-    /**
-     * min以下はmin、max以上はmaxに飽和させる
-     *
-     * @param value 値
-     * @param min   最小値
-     * @param max   最大値
-     * @return 飽和させた値
-     */
-    fun clamp(value: Int, min: Int, max: Int): Int {
-        return Math.min(Math.max(value, min), max)
-    }
-
-    /**
-     * min以下はmin、max以上はmaxに飽和させる
-     *
-     * @param value 値
-     * @param min   最小値
-     * @param max   最大値
-     * @return 飽和させた値
-     */
-    fun clamp(value: Float, min: Float, max: Float): Float {
-        return Math.min(Math.max(value, min), max)
-    }
 }
+
+/**
+ * Overwrite alpha value of color
+ *
+ * @receiver color
+ * @param alpha Alpha
+ * @return alpha applied color
+ */
+fun Int.setAlpha(alpha: Float): Int = setAlpha((0xff * alpha.clamp(0f, 1f)).toInt())
+
+/**
+ * Overwrite alpha value of color
+ *
+ * @receiver color
+ * @param alpha Alpha
+ * @return alpha applied color
+ */
+fun Int.setAlpha(alpha: Int): Int = this and 0xffffff or (alpha shl 24)
+
+/**
+ * Convert [0, 255] to [0.0f, 1.0f]
+ *
+ * @receiver [0, 255]
+ * @return [0.0f, 1.0f]
+ */
+fun Int.toRatio(): Float = this / 255f
+
+/**
+ * Convert [0.0f, 1.0f] to [0, 255]
+ *
+ * @receiver [0.0f, 1.0f]
+ * @return [0, 255]
+ */
+fun Float.to8bit(): Int = (this * 255f).roundToInt().clamp(0, 255)

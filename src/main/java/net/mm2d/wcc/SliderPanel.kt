@@ -47,7 +47,7 @@ class SliderPanel : JPanel() {
      * HSVの変化をRGBに連動させる
      */
     private fun onHsvChanged() {
-        val rgb = ColorUtils.convertHsvToRgb(hsvPanels[0].value, hsvPanels[1].value, hsvPanels[2].value)
+        val rgb = ColorUtils.hsvToRgb(hsvPanels[0].value, hsvPanels[1].value, hsvPanels[2].value)
         for (i in 0..2) {
             rgbPanels[i].value = rgb[i]
         }
@@ -58,7 +58,7 @@ class SliderPanel : JPanel() {
      * RGBの変化をHSVに連動させる
      */
     private fun onRgbChanged() {
-        val hsv = ColorUtils.convertRgbToHsv(rgbPanels[0].value, rgbPanels[1].value, rgbPanels[2].value)
+        val hsv = ColorUtils.rgbToHsv(rgbPanels[0].value, rgbPanels[1].value, rgbPanels[2].value)
         for (i in 0..2) {
             hsvPanels[i].value = hsv[i]
         }
@@ -74,7 +74,7 @@ class SliderPanel : JPanel() {
      */
     fun setHsv(h: Float, s: Float, v: Float) {
         val hsv = floatArrayOf(h, s, v)
-        val rgb = ColorUtils.convertHsvToRgb(hsv)
+        val rgb = ColorUtils.hsvToRgb(h, s, v)
         for (i in 0..2) {
             hsvPanels[i].value = hsv[i]
             rgbPanels[i].value = rgb[i]
@@ -90,7 +90,7 @@ class SliderPanel : JPanel() {
      */
     fun setRgb(r: Float, g: Float, b: Float) {
         val rgb = floatArrayOf(r, g, b)
-        val hsv = ColorUtils.convertRgbToHsv(rgb)
+        val hsv = ColorUtils.rgbToHsv(rgb)
         for (i in 0..2) {
             hsvPanels[i].value = hsv[i]
             rgbPanels[i].value = rgb[i]
