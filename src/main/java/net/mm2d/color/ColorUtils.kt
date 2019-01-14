@@ -72,6 +72,12 @@ object ColorUtils {
         return floatArrayOf(r, g, b)
     }
 
+    fun svToMask(s: Float, v: Float): Int {
+        val a = 1f - (s * v)
+        val g = if (a == 0f) 0f else clamp((v * (1f - s) / a), 0f, 1f)
+        return toColor(a, g, g, g)
+    }
+
     /**
      * RGB値をHSV表現に変換する
      *
@@ -159,8 +165,12 @@ object ColorUtils {
      * @param b 青
      * @return RGB int配列
      */
-    private fun toColor(r: Float, g: Float, b: Float): Int {
+    fun toColor(r: Float, g: Float, b: Float): Int {
         return toColor(to8bit(r), to8bit(g), to8bit(b))
+    }
+
+    fun toColor(a: Float, r: Float, g: Float, b: Float): Int {
+        return toColor(to8bit(a), to8bit(r), to8bit(g), to8bit(b))
     }
 
     /**
@@ -171,8 +181,12 @@ object ColorUtils {
      * @param b 青
      * @return RGB int配列
      */
-    private fun toColor(r: Int, g: Int, b: Int): Int {
+    fun toColor(r: Int, g: Int, b: Int): Int {
         return 0xff shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
+    }
+
+    fun toColor(a: Int, r: Int, g: Int, b: Int): Int {
+        return 0xff and a shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
     }
 
     /**

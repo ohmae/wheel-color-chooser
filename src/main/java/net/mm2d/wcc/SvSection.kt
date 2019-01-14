@@ -29,6 +29,7 @@ class SvSection : JPanel() {
     private var hue: Float = 0f
     private var saturation: Float = 1f
     private var value: Float = 1f
+    private var maxColor: Color = Color.RED
     var onSvChangeListener: ((hue: Float, saturation: Float, value: Float) -> Unit)? = null
 
     /**
@@ -83,7 +84,7 @@ class SvSection : JPanel() {
     private fun setHsv(h: Float, s: Float, v: Float, notify: Boolean) {
         if (hue != h) {
             hue = h
-            makeSvSection(image)
+            maxColor = Color(ColorUtils.toColor(ColorUtils.convertHsvToRgb(hue, 1f, 1f)))
         }
         saturation = s
         value = v
@@ -102,8 +103,7 @@ class SvSection : JPanel() {
         Thread {
             for (y in 0..RANGE) {
                 for (x in 0..RANGE) {
-                    val rgb = ColorUtils.convertHsvToRgb(hue, x.toFloat() / RANGE, (RANGE - y).toFloat() / RANGE)
-                    val color = ColorUtils.toColor(rgb)
+                    val color = ColorUtils.svToMask(x.toFloat() / RANGE, (RANGE - y).toFloat() / RANGE)
                     image.setRGB(x, y, color)
                 }
             }
@@ -115,6 +115,8 @@ class SvSection : JPanel() {
         val g2 = g as? Graphics2D ?: return
         g2.background = background
         g2.clearRect(0, 0, width, height)
+        g2.color = maxColor
+        g2.fillRect(marginLeft, marginTop, image.width, image.height)
         g2.drawImage(image, marginLeft, marginTop, this)
         // 選択している点を描画
         val x = (saturation * RANGE).toInt() + marginLeft
