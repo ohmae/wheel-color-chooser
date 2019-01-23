@@ -64,41 +64,15 @@ class MainWindow : JFrame() {
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         background = Color.WHITE
 
-        val monospace = Font("Monospaced", Font.PLAIN, 12)
-        rgbInput.font = monospace
-        hexColorArea.font = monospace
-        decColorArea.font = monospace
+        setUpFont()
+        setUpSpinner()
 
-        divisionSpinner.addChangeListener {
-            // 分割数用Spinnerの変化
-            hueCircle.setDivision(divisionSpinner.value as Int)
-            setColors()
-        }
-        reverseCheck.addChangeListener {
-            hueCircle.setReverse(reverseCheck.isSelected)
-            setColors()
-        }
-
-        val settingPanel = JPanel(FlowLayout()).also {
-            it.add(JLabel("RGB"))
-            it.add(rgbInput)
-            it.add(JLabel("分割数"))
-            it.add(divisionSpinner)
-            it.add(reverseCheck)
-        }
-        val controlPanel = JPanel(BorderLayout())
-        controlPanel.add(settingPanel, BorderLayout.NORTH)
-        controlPanel.add(sliderPanel, BorderLayout.CENTER)
-        val scrollPane = JScrollPane(JPanel(FlowLayout()).also {
-            it.add(samplePanel)
-            it.add(hexColorArea)
-            it.add(decColorArea)
-        }, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER).also {
-            it.preferredSize = Dimension(250, 530)
+        val controlPanel = JPanel(BorderLayout()).also {
+            it.add(makeSettingPanel(), BorderLayout.NORTH)
+            it.add(sliderPanel, BorderLayout.CENTER)
         }
 
         val contentPane = JPanel()
-        setContentPane(contentPane)
         val gbl = GridBagLayout()
         contentPane.layout = gbl
 
@@ -122,11 +96,48 @@ class MainWindow : JFrame() {
         gbc.gridx = 2
         gbc.gridy = 0
         gbc.gridheight = 2
+        val scrollPane = makeScrollPane()
         gbl.setConstraints(scrollPane, gbc)
         contentPane.add(scrollPane)
+        setContentPane(contentPane)
 
         isVisible = true
         setColors()
+    }
+
+    private fun setUpFont() {
+        val monospace = Font("Monospaced", Font.PLAIN, 12)
+        rgbInput.font = monospace
+        hexColorArea.font = monospace
+        decColorArea.font = monospace
+    }
+
+    private fun setUpSpinner() {
+        divisionSpinner.addChangeListener {
+            // 分割数用Spinnerの変化
+            hueCircle.setDivision(divisionSpinner.value as Int)
+            setColors()
+        }
+        reverseCheck.addChangeListener {
+            hueCircle.setReverse(reverseCheck.isSelected)
+            setColors()
+        }
+    }
+
+    private fun makeSettingPanel() = JPanel(FlowLayout()).also {
+        it.add(JLabel("RGB"))
+        it.add(rgbInput)
+        it.add(JLabel("分割数"))
+        it.add(divisionSpinner)
+        it.add(reverseCheck)
+    }
+
+    private fun makeScrollPane() = JScrollPane(JPanel(FlowLayout()).also {
+        it.add(samplePanel)
+        it.add(hexColorArea)
+        it.add(decColorArea)
+    }, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER).also {
+        it.preferredSize = Dimension(250, 530)
     }
 
     private fun onEditRgbInput() {
