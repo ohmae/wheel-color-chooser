@@ -13,12 +13,6 @@ fun Int.clamp(min: Int, max: Int): Int = when {
     else -> this
 }
 
-fun Long.clamp(min: Long, max: Long): Long = when {
-    this < min -> min
-    this > max -> max
-    else -> this
-}
-
 fun Float.clamp(min: Float, max: Float): Float = when {
     this < min -> min
     this > max -> max
