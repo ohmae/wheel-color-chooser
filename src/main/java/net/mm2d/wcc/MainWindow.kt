@@ -67,42 +67,38 @@ class MainWindow : JFrame() {
         setUpFont()
         setUpSpinner()
 
-        val controlPanel = JPanel(BorderLayout()).also {
-            it.add(makeSettingPanel(), BorderLayout.NORTH)
-            it.add(sliderPanel, BorderLayout.CENTER)
-        }
-
         val contentPane = JPanel()
         val gbl = GridBagLayout()
         contentPane.layout = gbl
 
-        val gbc = GridBagConstraints()
-        gbc.anchor = GridBagConstraints.NORTHWEST
-        gbc.gridx = 0
-        gbc.gridy = 0
-        gbc.gridwidth = 1
-        gbc.gridheight = 2
-        gbl.setConstraints(hueCircle, gbc)
-        contentPane.add(hueCircle)
-        gbc.gridheight = 1
-        gbc.gridx = 1
-        gbc.gridy = 0
-        gbl.setConstraints(svSection, gbc)
-        contentPane.add(svSection)
-        gbc.gridx = 1
-        gbc.gridy = 1
-        gbl.setConstraints(controlPanel, gbc)
-        contentPane.add(controlPanel)
-        gbc.gridx = 2
-        gbc.gridy = 0
-        gbc.gridheight = 2
-        val scrollPane = makeScrollPane()
-        gbl.setConstraints(scrollPane, gbc)
-        contentPane.add(scrollPane)
+        hueCircle.also {
+            gbl.setConstraints(it, makeGridBagConstraints(0, 0, 1, 2))
+            contentPane.add(it)
+        }
+        svSection.also {
+            gbl.setConstraints(it, makeGridBagConstraints(1, 0, 1, 1))
+            contentPane.add(it)
+        }
+        makeControlPanel().also {
+            gbl.setConstraints(it, makeGridBagConstraints(1, 1, 1, 1))
+            contentPane.add(it)
+        }
+        makeScrollPane().also {
+            gbl.setConstraints(it, makeGridBagConstraints(2, 0, 1, 2))
+            contentPane.add(it)
+        }
         setContentPane(contentPane)
 
         isVisible = true
         setColors()
+    }
+
+    private fun makeGridBagConstraints(x: Int, y: Int, width: Int, height: Int) = GridBagConstraints().also {
+        it.anchor = GridBagConstraints.NORTHWEST
+        it.gridx = x
+        it.gridy = y
+        it.gridwidth = width
+        it.gridheight = height
     }
 
     private fun setUpFont() {
@@ -138,6 +134,11 @@ class MainWindow : JFrame() {
         it.add(decColorArea)
     }, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER).also {
         it.preferredSize = Dimension(250, 530)
+    }
+
+    private fun makeControlPanel() = JPanel(BorderLayout()).also {
+        it.add(makeSettingPanel(), BorderLayout.NORTH)
+        it.add(sliderPanel, BorderLayout.CENTER)
     }
 
     private fun onEditRgbInput() {

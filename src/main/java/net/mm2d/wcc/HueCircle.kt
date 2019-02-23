@@ -8,9 +8,7 @@
 package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
-import net.mm2d.color.clamp
 import net.mm2d.color.setAlpha
-
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Graphics
@@ -18,7 +16,6 @@ import java.awt.Graphics2D
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
-
 import javax.swing.JPanel
 import kotlin.math.roundToInt
 
@@ -163,7 +160,7 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
                 if (distance < RADIUS + 1) {
                     val radian = calculateRadian(cx.toDouble(), cy.toDouble())
                     val h = (radian / (Math.PI * 2)).toFloat()
-                    val s = (distance / RADIUS).clamp(0.0f, 1.0f)
+                    val s = (distance / RADIUS).coerceIn(0.0f, 1.0f)
                     color = ColorUtils.hsvToColor(h, s, v)
                     val alpha = RADIUS + 1 - distance
                     if (alpha < 1) { // アンチエイリアス

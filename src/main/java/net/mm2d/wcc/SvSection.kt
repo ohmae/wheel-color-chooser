@@ -8,9 +8,7 @@
 package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
-import net.mm2d.color.clamp
 import net.mm2d.color.toRatio
-
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Graphics
@@ -18,7 +16,6 @@ import java.awt.Graphics2D
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
-
 import javax.swing.JPanel
 
 /**
@@ -65,8 +62,8 @@ class SvSection : JPanel() {
      * @param y Y座標
      */
     private fun selectPoint(x: Int, y: Int) {
-        val s = (x - marginLeft).clamp(0, 255).toRatio()
-        val v = (RANGE - (y - marginTop)).clamp(0, 255).toRatio()
+        val s = (x - marginLeft).coerceIn(0, 255).toRatio()
+        val v = (RANGE - (y - marginTop)).coerceIn(0, 255).toRatio()
         setHsv(hue, s, v, true)
     }
 

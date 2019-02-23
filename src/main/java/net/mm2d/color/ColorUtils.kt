@@ -76,7 +76,7 @@ object ColorUtils {
 
     fun svToMask(s: Float, v: Float): Int {
         val a = 1f - (s * v)
-        val g = if (a == 0f) 0f else (v * (1f - s) / a).clamp(0f, 1f)
+        val g = if (a == 0f) 0f else (v * (1f - s) / a).coerceIn(0f, 1f)
         return toColor(a, g, g, g)
     }
 
@@ -145,7 +145,7 @@ object ColorUtils {
                 hue = 4.0f + (r - g) / hue
             }
         }
-        hue = (hue / 6.0f).clamp(0.0f, 1.0f)
+        hue = (hue / 6.0f).coerceIn(0.0f, 1.0f)
         return hue
     }
 
@@ -203,7 +203,7 @@ object ColorUtils {
  * @param alpha Alpha
  * @return alpha applied color
  */
-fun Int.setAlpha(alpha: Float): Int = setAlpha((0xff * alpha.clamp(0f, 1f)).toInt())
+fun Int.setAlpha(alpha: Float): Int = setAlpha((0xff * alpha.coerceIn(0f, 1f)).toInt())
 
 /**
  * Overwrite alpha value of color
@@ -228,4 +228,4 @@ fun Int.toRatio(): Float = this / 255f
  * @receiver [0.0f, 1.0f]
  * @return [0, 255]
  */
-fun Float.to8bit(): Int = (this * 255f).roundToInt().clamp(0, 255)
+fun Float.to8bit(): Int = (this * 255f).roundToInt().coerceIn(0, 255)
