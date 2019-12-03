@@ -101,17 +101,17 @@ class SvSection : JPanel() {
 
 
     override fun paint(g: Graphics?) {
-        val g2 = g as? Graphics2D ?: return
-        g2.background = background
-        g2.clearRect(0, 0, width, height)
-        g2.color = maxColor
-        g2.fillRect(marginLeft, marginTop, image.width, image.height)
-        g2.drawImage(image, marginLeft, marginTop, this)
+        if (g !is Graphics2D) return
+        g.background = background
+        g.clearRect(0, 0, width, height)
+        g.color = maxColor
+        g.fillRect(marginLeft, marginTop, image.width, image.height)
+        g.drawImage(image, marginLeft, marginTop, this)
         // 選択している点を描画
         val x = (saturation * RANGE).toInt() + marginLeft
         val y = (RANGE - value * RANGE).toInt() + marginTop
-        g2.setXORMode(Color.WHITE)
-        g2.drawRect(x - 1, y - 1, 2, 2)
+        g.setXORMode(Color.WHITE)
+        g.drawRect(x - 1, y - 1, 2, 2)
     }
 
     companion object {
