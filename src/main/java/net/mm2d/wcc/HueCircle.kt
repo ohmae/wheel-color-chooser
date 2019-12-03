@@ -17,7 +17,7 @@ import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
 import javax.swing.JPanel
-import kotlin.math.roundToInt
+import kotlin.math.*
 
 /**
  * 色相環を表示操作するクラス
@@ -80,14 +80,14 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
      * @param y Y座標
      */
     private fun selectPoint(x: Int, y: Int) {
-        val cx = x - centerX
-        val cy = centerY - y
-        val distance = Math.sqrt((cx * cx + cy * cy).toDouble()).toFloat()
-        val h = (calculateRadian(cx.toDouble(), cy.toDouble()) / (Math.PI * 2)).toFloat()
+        val cx = (x - centerX).toFloat()
+        val cy = (centerY - y).toFloat()
+        val distance = hypot(cx, cy)
+        val h = calculateRadian(cx, cy) / (PI * 2)
         val s: Float = if (distance < RADIUS) {
             distance / RADIUS
         } else {
-            1.0f
+            1f
         }
         setHsv(h, s, value, true)
     }
@@ -152,14 +152,14 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
      */
     private fun makeHSCircle(v: Float) {
         for (y in 0 until image.height) {
-            val cy = RADIUS - y
+            val cy = (RADIUS - y).toFloat()
             for (x in 0 until image.width) {
-                val cx = x - RADIUS
-                val distance = Math.sqrt((cx * cx + cy * cy).toDouble()).toFloat()
+                val cx = (x - RADIUS).toFloat()
+                val distance = hypot(cx, cy)
                 var color = 0
                 if (distance < RADIUS + 1) {
-                    val radian = calculateRadian(cx.toDouble(), cy.toDouble())
-                    val h = (radian / (Math.PI * 2)).toFloat()
+                    val radian = calculateRadian(cx, cy)
+                    val h = radian / (PI * 2f)
                     val s = (distance / RADIUS).coerceIn(0.0f, 1.0f)
                     color = ColorUtils.hsvToColor(h, s, v)
                     val alpha = RADIUS + 1 - distance
@@ -189,19 +189,19 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
      * @param y Y座標
      * @return 座標とX軸の角度 radian
      */
-    private fun calculateRadian(x: Double, y: Double): Double {
-        if (x == 0.0) {
+    private fun calculateRadian(x: Float, y: Float): Float {
+        if (x == 0f) {
             // ゼロ除算回避
-            return if (y > 0) {
-                Math.PI / 2
+            return if (y > 0f) {
+                PI / 2f
             } else {
-                Math.PI * 3 / 2
+                PI * 3f / 2f
             }
         }
-        return Math.atan(y / x) + when {
-            x < 0 -> Math.PI
-            y < 0 -> Math.PI * 2
-            else -> 0.0
+        return atan(y / x) + when {
+            x < 0f -> PI
+            y < 0f -> PI * 2f
+            else -> 0f
         }
     }
 
@@ -214,9 +214,9 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
         // 選択している点を表示
         g2.setXORMode(Color.WHITE)
         for (i in 0 until sampleCount) {
-            val a = decimal(hue + i.toFloat() / sampleCount) * 2.0 * Math.PI
-            val x = centerX + (Math.cos(a) * r).roundToInt()
-            val y = centerY - (Math.sin(a) * r).roundToInt()
+            val a = decimal(hue + i.toFloat() / sampleCount) * 2f * PI
+            val x = centerX + (cos(a) * r).roundToInt()
+            val y = centerY - (sin(a) * r).roundToInt()
             if (i == 0) {
                 // 操作点を大きく
                 g2.drawRect(x - 3, y - 3, 4, 4)
@@ -231,5 +231,6 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
         private const val DIAMETER = RADIUS * 2 + 1
         private const val WIDTH = 520
         private const val HEIGHT = 520
+        private const val PI = Math.PI.toFloat()
     }
 }
