@@ -21,9 +21,7 @@ object ColorUtils {
      * @param v Value
      * @return RGB FloatArray
      */
-    fun hsvToRgb(h: Float, s: Float, v: Float): FloatArray {
-        return toRGB(hsvToColor(h, s, v))
-    }
+    fun hsvToRgb(h: Float, s: Float, v: Float): FloatArray = toRGB(hsvToColor(h, s, v))
 
     /**
      * Convert given HSV [0.0f, 1.0f] to color
@@ -86,9 +84,7 @@ object ColorUtils {
      * @param rgb RGB float配列
      * @return HSV float配列
      */
-    fun rgbToHsv(rgb: FloatArray): FloatArray {
-        return rgbToHsv(rgb[0], rgb[1], rgb[2])
-    }
+    fun rgbToHsv(rgb: FloatArray): FloatArray = rgbToHsv(rgb[0], rgb[1], rgb[2])
 
     /**
      * RGB値をHSV表現に変換する
@@ -111,15 +107,9 @@ object ColorUtils {
         return hsv
     }
 
-    private fun max(v1: Float, v2: Float, v3: Float): Float {
-        val max = if (v1 > v2) v1 else v2
-        return if (max > v3) max else v3
-    }
+    private fun max(v1: Float, v2: Float, v3: Float): Float = maxOf(maxOf(v1, v2), v3)
 
-    private fun min(v1: Float, v2: Float, v3: Float): Float {
-        val min = if (v1 < v2) v1 else v2
-        return if (min < v3) min else v3
-    }
+    private fun min(v1: Float, v2: Float, v3: Float): Float = minOf(minOf(v1, v2), v3)
 
     /**
      * rgbおよびrgbの最大値最小値から色相を計算する
@@ -149,21 +139,17 @@ object ColorUtils {
         return hue
     }
 
-    private fun toColor(r: Float, g: Float, b: Float): Int {
-        return toColor(r.to8bit(), g.to8bit(), b.to8bit())
-    }
+    private fun toColor(r: Float, g: Float, b: Float): Int =
+        toColor(r.to8bit(), g.to8bit(), b.to8bit())
 
-    private fun toColor(a: Float, r: Float, g: Float, b: Float): Int {
-        return toColor(a.to8bit(), r.to8bit(), g.to8bit(), b.to8bit())
-    }
+    private fun toColor(a: Float, r: Float, g: Float, b: Float): Int =
+        toColor(a.to8bit(), r.to8bit(), g.to8bit(), b.to8bit())
 
-    private fun toColor(r: Int, g: Int, b: Int): Int {
-        return 0xff shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
-    }
+    private fun toColor(r: Int, g: Int, b: Int): Int =
+        0xff shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
 
-    private fun toColor(a: Int, r: Int, g: Int, b: Int): Int {
-        return 0xff and a shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
-    }
+    private fun toColor(a: Int, r: Int, g: Int, b: Int): Int =
+        0xff and a shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
 
     /**
      * int値で表現されたRGB値をint[3]に変換する。
@@ -172,13 +158,12 @@ object ColorUtils {
      * @param color intで表現されたRGB値
      * @return RGB int配列
      */
-    fun toRGBInt(color: Int): IntArray {
-        return intArrayOf(
+    fun toRGBInt(color: Int): IntArray =
+        intArrayOf(
                 0xff and color.ushr(16),
                 0xff and color.ushr(8),
                 0xff and color
         )
-    }
 
     /**
      * int値で表現されたRGB値をfloat[3]に変換する。
@@ -187,13 +172,12 @@ object ColorUtils {
      * @param color intで表現されたRGB値
      * @return RGB float配列
      */
-    fun toRGB(color: Int): FloatArray {
-        return floatArrayOf(
+    fun toRGB(color: Int): FloatArray =
+        floatArrayOf(
                 color.ushr(16).toRatio(),
                 color.ushr(8).toRatio(),
                 color.toRatio()
         )
-    }
 }
 
 /**
