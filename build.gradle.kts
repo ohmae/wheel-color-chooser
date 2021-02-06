@@ -22,4 +22,12 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
+    jar {
+        manifest {
+            attributes(mapOf("Main-Class" to "net.mm2d.wcc.MainWindow"))
+        }
+        from({
+            configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+        })
+    }
 }
