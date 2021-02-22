@@ -1,12 +1,11 @@
 plugins {
-    kotlin("jvm") version ("1.4.21")
+    kotlin("jvm") version ("1.4.30")
 }
 
 group = "net.mm2d"
 version = "1.1.0"
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
