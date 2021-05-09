@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version ("1.4.30")
+    kotlin("jvm") version ("1.5.0")
 }
 
 group = "net.mm2d"
@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13.2")
 }
 
 tasks {
