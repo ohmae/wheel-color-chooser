@@ -12,6 +12,7 @@ import net.mm2d.color.setAlpha
 import java.awt.*
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
+import java.util.*
 import javax.swing.*
 import javax.swing.JSpinner.DefaultEditor
 
@@ -161,7 +162,7 @@ class MainWindow : JFrame() {
         rgbInput.background = Color.WHITE
         val rgb = ColorUtils.toRGBInt(color)
         val hexText = String.format("%02X%02X%02X", rgb[0], rgb[1], rgb[2])
-        if (rgbInput.text.toUpperCase() != hexText) {
+        if (rgbInput.text.uppercase() != hexText) {
             rgbInput.text = hexText
         }
     }
@@ -176,7 +177,7 @@ class MainWindow : JFrame() {
         if (hexText.length != 6) {
             return -1
         }
-        val text = hexText.toLowerCase()
+        val text = hexText.lowercase()
         var color = 0
         for (i in 0..5) {
             color = color shl 4
