@@ -12,7 +12,6 @@ import net.mm2d.color.setAlpha
 import java.awt.*
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import java.util.*
 import javax.swing.*
 import javax.swing.JSpinner.DefaultEditor
 
@@ -29,15 +28,9 @@ class MainWindow : JFrame() {
     private val sliderPanel: SliderPanel = SliderPanel().also {
         it.onHsvChangeListener = ::onHsvChange
     }
-    private val samplePanel: ColorSamplePanel = ColorSamplePanel(DEFAULT_COLOR_NUM)
-    private val hexColorArea: JTextArea = JTextArea().also {
-        it.columns = 7 // #xxxxxxで7文字
-        it.isEditable = false // 編集不可
-    }
-    private val decColorArea: JTextArea = JTextArea().also {
-        it.columns = 18 // rgb(xxx, xxx, xxx)で18文字
-        it.isEditable = false
-    }
+    private val samplePanel: ColorSamplePanel = ColorSamplePanel()
+    private val hexColorArea: TextLabelArray = TextLabelArray(7) // #xxxxxxで7文字
+    private val decColorArea: TextLabelArray = TextLabelArray(13) // xxx, xxx, xxxで18文字
     private val divisionSpinner: JSpinner = JSpinner(SpinnerNumberModel().also {
         it.minimum = 2
         it.maximum = 360
@@ -201,18 +194,10 @@ class MainWindow : JFrame() {
         // サンプル一覧を更新
         samplePanel.setColors(colors)
         // 16進数表記と10進数表記まとめて作成
-        val hexSb = StringBuilder()
-        val decSb = StringBuilder()
-        colors.forEach {
-            val rgb = ColorUtils.toRGBInt(it)
-            val hexText = String.format("#%02X%02X%02X%n", rgb[0], rgb[1], rgb[2])
-            hexSb.append(hexText)
-            val decText = String.format("rgb(%d, %d, %d)%n", rgb[0], rgb[1], rgb[2])
-            decSb.append(decText)
-        }
+        val rgbs = colors.map { ColorUtils.toRGBInt(it) }
         // テキストエリアへ反映
-        hexColorArea.text = hexSb.toString().trim { it <= ' ' }
-        decColorArea.text = decSb.toString().trim { it <= ' ' }
+        hexColorArea.setTexts(rgbs.map { "#%02X%02X%02X".format(it[0], it[1], it[2]) })
+        decColorArea.setTexts(rgbs.map { "%3d, %3d, %3d".format(it[0], it[1], it[2]) })
     }
 
     private fun onSvChange(hue: Float, saturation: Float, value: Float) {

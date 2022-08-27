@@ -21,10 +21,10 @@ import kotlin.math.roundToInt
  * @param max   最大値
  */
 class SliderSpinnerPanel(
-        label: String,
-        value: Int,
-        private val min: Int,
-        private val max: Int
+    label: String,
+    value: Int,
+    private val min: Int,
+    private val max: Int
 ) : JPanel() {
     private val slider: JSlider = JSlider().also {
         it.minimum = min
@@ -34,6 +34,7 @@ class SliderSpinnerPanel(
         it.minimum = min
         it.maximum = max
     })
+
     @Volatile
     private var notify = true
     private var _value: Float = 0f

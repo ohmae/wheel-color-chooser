@@ -44,13 +44,13 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
     val colors: IntArray
         get() {
             val colors = IntArray(sampleCount)
-            for (i in 0 until sampleCount) {
-                val h = decimal(hue + i.toFloat() / sampleCount)
+            repeat(sampleCount) {
+                val h = decimal(hue + it.toFloat() / sampleCount)
                 val color = ColorUtils.hsvToColor(h, saturation, value)
                 if (reverse) {
-                    colors[(sampleCount - i) % sampleCount] = color
+                    colors[(sampleCount - it) % sampleCount] = color
                 } else {
-                    colors[i] = color
+                    colors[it] = color
                 }
             }
             return colors

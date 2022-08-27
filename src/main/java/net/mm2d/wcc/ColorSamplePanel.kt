@@ -9,78 +9,57 @@ package net.mm2d.wcc
 
 import java.awt.Color
 import java.awt.Dimension
-import java.util.*
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 
-/**
- * カラーサンプルを表示する
- *
- * @param count 色数
- */
-class ColorSamplePanel(count: Int) : JPanel() {
-    private val panelList: MutableList<JPanel>
-    private val cellSize: Dimension
-    private var sampleCount: Int = 0
+class ColorSamplePanel() : JPanel() {
+    private val cellCache: MutableList<JPanel> = ArrayList()
+    private val cellSize: Dimension = Dimension(30, 20) // 一つの大きさ
+    private var childCount: Int = 0
 
     init {
-        sampleCount = count
-        cellSize = Dimension(30, 17) // 一つの大きさ
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
-        sampleCount = 12
-        panelList = ArrayList(sampleCount)
-        for (i in 0 until sampleCount) {
-            val panel = JPanel()
-            panel.preferredSize = cellSize
-            panelList.add(panel)
-            add(panel)
-        }
     }
 
-    /**
-     * 色数を設定する
-     *
-     * @param count 色数
-     */
-    private fun setSampleCount(count: Int) {
+    private fun addNewCell() {
+        val cell = newCell()
+        cellCache.add(cell)
+        add(cell)
+    }
+
+    private fun newCell(): JPanel =
+        JPanel().also {
+            it.preferredSize = cellSize
+        }
+
+    private fun ensureRows(rows: Int) {
         when {
-            count == sampleCount ->
-                return
-            count < sampleCount ->
-                for (i in count until sampleCount) {
-                    remove(i)
-                }
-            count < panelList.size ->
-                for (i in sampleCount until count) {
-                    add(panelList[i])
-                }
+            rows == childCount -> return
+            rows < childCount -> {
+                (rows until childCount).forEach { remove(it) }
+            }
+
+            rows < cellCache.size -> {
+                (childCount until rows).forEach { add(cellCache[it]) }
+            }
+
             else -> {
-                for (i in sampleCount until panelList.size) {
+                (childCount until cellCache.size).forEach {
                     // 確保済みが残っていたら追加
-                    add(panelList[i])
+                    add(cellCache[it])
                 }
-                for (i in panelList.size until count) {
-                    // 確保しながら追加
-                    JPanel().also {
-                        it.preferredSize = cellSize
-                        panelList.add(it)
-                        add(it)
-                    }
+                repeat(rows - cellCache.size) {
+                    addNewCell()
                 }
             }
         }
-        sampleCount = count
+        childCount = rows
     }
 
-    /**
-     * 色リストを設定
-     *
-     * @param colors 表示する色
-     */
     fun setColors(colors: IntArray) {
-        setSampleCount(colors.size)
-        colors.indices.forEach {
-            panelList[it].background = Color(colors[it])
+        ensureRows(colors.size)
+        colors.forEachIndexed { index, color ->
+            cellCache[index].background = Color(color)
         }
     }
 }
