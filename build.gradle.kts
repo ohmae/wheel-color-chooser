@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.mm2d"
-version = "1.1.0"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -28,5 +28,6 @@ tasks {
         from({
             configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
         })
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 }
