@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version ("1.7.10")
+    kotlin("jvm") version ("1.8.21")
 }
 
 group = "net.mm2d"
@@ -10,16 +10,21 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
     testImplementation("junit:junit:4.13.2")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
 }
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
     jar {
         manifest {
