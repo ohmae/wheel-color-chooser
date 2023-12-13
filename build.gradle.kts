@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version ("1.8.21")
+    kotlin("jvm") version ("1.9.21")
 }
 
 group = "net.mm2d"
@@ -15,16 +15,20 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
     }
     jar {
         manifest {
