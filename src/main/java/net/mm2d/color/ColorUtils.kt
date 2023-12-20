@@ -160,9 +160,9 @@ object ColorUtils {
      */
     fun toRGBInt(color: Int): IntArray =
         intArrayOf(
-                0xff and color.ushr(16),
-                0xff and color.ushr(8),
-                0xff and color
+            0xff and color.ushr(16),
+            0xff and color.ushr(8),
+            0xff and color,
         )
 
     /**
@@ -174,9 +174,9 @@ object ColorUtils {
      */
     fun toRGB(color: Int): FloatArray =
         floatArrayOf(
-                color.ushr(16).toRatio(),
-                color.ushr(8).toRatio(),
-                color.toRatio()
+            color.ushr(16).toRatio(),
+            color.ushr(8).toRatio(),
+            color.toRatio(),
         )
 }
 

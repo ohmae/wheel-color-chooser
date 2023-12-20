@@ -24,16 +24,18 @@ class SliderSpinnerPanel(
     label: String,
     value: Int,
     private val min: Int,
-    private val max: Int
+    private val max: Int,
 ) : JPanel() {
     private val slider: JSlider = JSlider().also {
         it.minimum = min
         it.maximum = max
     }
-    private val spinner: JSpinner = JSpinner(SpinnerNumberModel().also {
-        it.minimum = min
-        it.maximum = max
-    })
+    private val spinner: JSpinner = JSpinner(
+        SpinnerNumberModel().also {
+            it.minimum = min
+            it.maximum = max
+        },
+    )
 
     @Volatile
     private var notify = true

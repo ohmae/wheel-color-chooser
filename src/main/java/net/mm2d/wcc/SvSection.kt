@@ -99,7 +99,6 @@ class SvSection : JPanel() {
         repaint()
     }
 
-
     override fun paint(g: Graphics?) {
         if (g !is Graphics2D) return
         g.background = background

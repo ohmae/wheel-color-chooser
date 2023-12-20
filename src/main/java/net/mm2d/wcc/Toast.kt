@@ -12,11 +12,13 @@ class Toast(message: String) : JDialog() {
         val label = JLabel(message).also {
             it.border = BorderFactory.createEmptyBorder(4, 8, 4, 8)
         }
-        add(JPanel().also {
-            it.border = BorderFactory.createLineBorder(Color.LIGHT_GRAY)
-            it.background = Color.WHITE
-            it.add(label)
-        })
+        add(
+            JPanel().also {
+                it.border = BorderFactory.createLineBorder(Color.LIGHT_GRAY)
+                it.background = Color.WHITE
+                it.add(label)
+            },
+        )
         pack()
     }
 

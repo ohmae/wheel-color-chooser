@@ -31,10 +31,12 @@ class MainWindow : JFrame() {
     private val samplePanel: ColorSamplePanel = ColorSamplePanel()
     private val hexColorArea: TextLabelArray = TextLabelArray(7) // #xxxxxxで7文字
     private val decColorArea: TextLabelArray = TextLabelArray(13) // xxx, xxx, xxxで18文字
-    private val divisionSpinner: JSpinner = JSpinner(SpinnerNumberModel().also {
-        it.minimum = 2
-        it.maximum = 360
-    }).also {
+    private val divisionSpinner: JSpinner = JSpinner(
+        SpinnerNumberModel().also {
+            it.minimum = 2
+            it.maximum = 360
+        },
+    ).also {
         it.value = DEFAULT_COLOR_NUM
         (it.editor as DefaultEditor).let { editor ->
             editor.textField.columns = 3
@@ -122,11 +124,15 @@ class MainWindow : JFrame() {
         it.add(reverseCheck)
     }
 
-    private fun makeScrollPane() = JScrollPane(JPanel(FlowLayout()).also {
-        it.add(samplePanel)
-        it.add(hexColorArea)
-        it.add(decColorArea)
-    }, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER).also {
+    private fun makeScrollPane() = JScrollPane(
+        JPanel(FlowLayout()).also {
+            it.add(samplePanel)
+            it.add(hexColorArea)
+            it.add(decColorArea)
+        },
+        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER,
+    ).also {
         it.preferredSize = Dimension(250, 530)
     }
 

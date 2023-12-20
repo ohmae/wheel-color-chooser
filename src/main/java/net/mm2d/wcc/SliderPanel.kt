@@ -8,7 +8,6 @@
 package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
-
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 
@@ -19,12 +18,12 @@ class SliderPanel : JPanel() {
     private val hsvPanels = arrayOf( // HSVの操作
         SliderSpinnerPanel("H", 0, 0, 360),
         SliderSpinnerPanel("S", 255, 0, 255),
-        SliderSpinnerPanel("V", 255, 0, 255)
+        SliderSpinnerPanel("V", 255, 0, 255),
     )
     private val rgbPanels = arrayOf( // RGBの操作
         SliderSpinnerPanel("R", 255, 0, 255),
         SliderSpinnerPanel("G", 0, 0, 255),
-        SliderSpinnerPanel("B", 0, 0, 255)
+        SliderSpinnerPanel("B", 0, 0, 255),
     )
     var onHsvChangeListener: ((h: Float, s: Float, v: Float) -> Unit)? = null
 

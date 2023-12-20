@@ -25,11 +25,14 @@ class TextLabelArray(columns: Int) : JPanel() {
     private fun addNewCell() {
         val cell = newCell()
         cellCache.add(cell)
-        add(JPanel(BorderLayout()).also {
-            it.add(cell)
-            it.background = Color.WHITE
-            it.preferredSize = cellSize
-        }, BorderLayout.CENTER)
+        add(
+            JPanel(BorderLayout()).also {
+                it.add(cell)
+                it.background = Color.WHITE
+                it.preferredSize = cellSize
+            },
+            BorderLayout.CENTER,
+        )
     }
 
     private fun newCell(): JLabel =
