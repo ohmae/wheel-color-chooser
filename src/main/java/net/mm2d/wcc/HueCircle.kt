@@ -17,7 +17,11 @@ import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
 import javax.swing.JPanel
-import kotlin.math.*
+import kotlin.math.atan
+import kotlin.math.cos
+import kotlin.math.hypot
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
 /**
  * 色相環を表示操作するクラス
@@ -178,9 +182,7 @@ class HueCircle(private var sampleCount: Int) : JPanel() {
      * @param value 実数
      * @return 小数部
      */
-    private fun decimal(value: Float): Float {
-        return value - value.toInt()
-    }
+    private fun decimal(value: Float): Float = value - value.toInt()
 
     /**
      * 指定された座標とX軸がなす角度を計算して返す

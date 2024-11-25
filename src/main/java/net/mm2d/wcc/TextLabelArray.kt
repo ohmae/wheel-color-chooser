@@ -35,20 +35,19 @@ class TextLabelArray(columns: Int) : JPanel() {
         )
     }
 
-    private fun newCell(): JLabel =
-        JLabel().also {
-            it.size = cellSize
-            font?.let { font ->
-                it.font = font
-            }
-            it.border = BorderFactory.createEmptyBorder(0, 4, 0, 0)
-            it.addMouseListener(object : MouseAdapter() {
-                override fun mouseClicked(e: MouseEvent?) {
-                    clipboard.setContents(StringSelection(it.text), null)
-                    Toast.show(this@TextLabelArray, "copy to clipboard \"${it.text}\"")
-                }
-            })
+    private fun newCell(): JLabel = JLabel().also {
+        it.size = cellSize
+        font?.let { font ->
+            it.font = font
         }
+        it.border = BorderFactory.createEmptyBorder(0, 4, 0, 0)
+        it.addMouseListener(object : MouseAdapter() {
+            override fun mouseClicked(e: MouseEvent?) {
+                clipboard.setContents(StringSelection(it.text), null)
+                Toast.show(this@TextLabelArray, "copy to clipboard \"${it.text}\"")
+            }
+        })
+    }
 
     private fun ensureRows(rows: Int) {
         when {

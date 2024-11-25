@@ -12,7 +12,7 @@ import java.awt.Dimension
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 
-class ColorSamplePanel() : JPanel() {
+class ColorSamplePanel : JPanel() {
     private val cellCache: MutableList<JPanel> = ArrayList()
     private val cellSize: Dimension = Dimension(30, 20) // 一つの大きさ
     private var childCount: Int = 0
@@ -27,10 +27,9 @@ class ColorSamplePanel() : JPanel() {
         add(cell)
     }
 
-    private fun newCell(): JPanel =
-        JPanel().also {
-            it.preferredSize = cellSize
-        }
+    private fun newCell(): JPanel = JPanel().also {
+        it.preferredSize = cellSize
+    }
 
     private fun ensureRows(rows: Int) {
         when {

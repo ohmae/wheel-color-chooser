@@ -44,26 +44,32 @@ object ColorUtils {
                 g *= 1 - s * (1 - f)
                 b *= 1 - s
             }
+
             1 -> { // h:[1.0f, 2.0f)
                 r *= 1 - s * f
                 b *= 1 - s
             }
+
             2 -> { // h:[2.0f, 3.0f)
                 r *= 1 - s
                 b *= 1 - s * (1 - f)
             }
+
             3 -> { // h:[3.0f, 4.0f)
                 r *= 1 - s
                 g *= 1 - s * f
             }
+
             4 -> { // h:[4.0f, 5.0f)
                 r *= 1 - s * (1 - f)
                 g *= 1 - s
             }
+
             5 -> { // h:[5.0f, 6.0f)
                 g *= 1 - s
                 b *= 1 - s * f
             }
+
             else -> {
                 g *= 1 - s * (1 - f)
                 b *= 1 - s
@@ -139,8 +145,7 @@ object ColorUtils {
         return hue
     }
 
-    private fun toColor(r: Float, g: Float, b: Float): Int =
-        toColor(r.to8bit(), g.to8bit(), b.to8bit())
+    private fun toColor(r: Float, g: Float, b: Float): Int = toColor(r.to8bit(), g.to8bit(), b.to8bit())
 
     private fun toColor(a: Float, r: Float, g: Float, b: Float): Int =
         toColor(a.to8bit(), r.to8bit(), g.to8bit(), b.to8bit())
@@ -158,12 +163,11 @@ object ColorUtils {
      * @param color intで表現されたRGB値
      * @return RGB int配列
      */
-    fun toRGBInt(color: Int): IntArray =
-        intArrayOf(
-            0xff and color.ushr(16),
-            0xff and color.ushr(8),
-            0xff and color,
-        )
+    fun toRGBInt(color: Int): IntArray = intArrayOf(
+        0xff and color.ushr(16),
+        0xff and color.ushr(8),
+        0xff and color,
+    )
 
     /**
      * int値で表現されたRGB値をfloat[3]に変換する。
@@ -172,12 +176,11 @@ object ColorUtils {
      * @param color intで表現されたRGB値
      * @return RGB float配列
      */
-    fun toRGB(color: Int): FloatArray =
-        floatArrayOf(
-            color.ushr(16).toRatio(),
-            color.ushr(8).toRatio(),
-            color.toRatio(),
-        )
+    fun toRGB(color: Int): FloatArray = floatArrayOf(
+        color.ushr(16).toRatio(),
+        color.ushr(8).toRatio(),
+        color.toRatio(),
+    )
 }
 
 /**

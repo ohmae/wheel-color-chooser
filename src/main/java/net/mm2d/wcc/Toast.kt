@@ -2,7 +2,12 @@ package net.mm2d.wcc
 
 import java.awt.Color
 import java.awt.Window
-import javax.swing.*
+import javax.swing.BorderFactory
+import javax.swing.JComponent
+import javax.swing.JDialog
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.SwingUtilities
 
 class Toast(message: String) : JDialog() {
     init {

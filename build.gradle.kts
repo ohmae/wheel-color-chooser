@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version ("1.9.21")
+    kotlin("jvm") version ("2.0.21")
 }
 
 group = "net.mm2d"
@@ -14,7 +14,7 @@ val ktlint by configurations.creating
 dependencies {
     testImplementation("junit:junit:4.13.2")
 
-    ktlint("com.pinterest.ktlint:ktlint-cli:1.0.1") {
+    ktlint("com.pinterest.ktlint:ktlint-cli:1.4.1") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }

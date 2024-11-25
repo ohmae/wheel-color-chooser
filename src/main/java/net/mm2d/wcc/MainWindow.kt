@@ -9,11 +9,27 @@ package net.mm2d.wcc
 
 import net.mm2d.color.ColorUtils
 import net.mm2d.color.setAlpha
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.FlowLayout
+import java.awt.Font
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import javax.swing.*
+import javax.swing.JCheckBox
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JScrollPane
+import javax.swing.JSpinner
 import javax.swing.JSpinner.DefaultEditor
+import javax.swing.JTextField
+import javax.swing.SpinnerNumberModel
+import javax.swing.UIManager
+import javax.swing.UnsupportedLookAndFeelException
+import javax.swing.WindowConstants
 
 /**
  * メインウィンドウ

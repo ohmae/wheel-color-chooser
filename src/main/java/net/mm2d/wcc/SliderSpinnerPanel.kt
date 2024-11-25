@@ -8,8 +8,12 @@
 package net.mm2d.wcc
 
 import java.awt.FlowLayout
-import javax.swing.*
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JSlider
+import javax.swing.JSpinner
 import javax.swing.JSpinner.DefaultEditor
+import javax.swing.SpinnerNumberModel
 import kotlin.math.roundToInt
 
 /**
