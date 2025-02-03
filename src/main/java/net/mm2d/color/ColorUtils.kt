@@ -147,14 +147,11 @@ object ColorUtils {
 
     private fun toColor(r: Float, g: Float, b: Float): Int = toColor(r.to8bit(), g.to8bit(), b.to8bit())
 
-    private fun toColor(a: Float, r: Float, g: Float, b: Float): Int =
-        toColor(a.to8bit(), r.to8bit(), g.to8bit(), b.to8bit())
+    private fun toColor(a: Float, r: Float, g: Float, b: Float): Int = toColor(a.to8bit(), r.to8bit(), g.to8bit(), b.to8bit())
 
-    private fun toColor(r: Int, g: Int, b: Int): Int =
-        0xff shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
+    private fun toColor(r: Int, g: Int, b: Int): Int = 0xff shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
 
-    private fun toColor(a: Int, r: Int, g: Int, b: Int): Int =
-        0xff and a shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
+    private fun toColor(a: Int, r: Int, g: Int, b: Int): Int = 0xff and a shl 24 or (0xff and r shl 16) or (0xff and g shl 8) or (0xff and b)
 
     /**
      * int値で表現されたRGB値をint[3]に変換する。

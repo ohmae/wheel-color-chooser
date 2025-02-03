@@ -1,5 +1,7 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    kotlin("jvm") version ("2.0.21")
+    kotlin("jvm") version ("2.1.10")
 }
 
 group = "net.mm2d"
@@ -14,7 +16,7 @@ val ktlint by configurations.creating
 dependencies {
     testImplementation("junit:junit:4.13.2")
 
-    ktlint("com.pinterest.ktlint:ktlint-cli:1.4.1") {
+    ktlint("com.pinterest.ktlint:ktlint-cli:1.5.0") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
@@ -65,10 +67,10 @@ kotlin {
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "17"
+        kotlin.compilerOptions.jvmTarget = JvmTarget.JVM_17
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "17"
+        kotlin.compilerOptions.jvmTarget = JvmTarget.JVM_17
     }
     jar {
         manifest {
